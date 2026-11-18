@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Zydel Kenzoi · Christening Invitation</title>
+  <script>
+    /* GitHub Pages serves this page for /index.html/<Guest Name>.
+       Turn the trailing path back into a name and hand it to index.html. */
+    (function () {
+      var parts = location.pathname.split("/");
+      var at = parts.lastIndexOf("index.html");
+      var baseDir, rest;
+
+      if (at > -1) {
+        baseDir = parts.slice(0, at).join("/") + "/";
+        rest = parts.slice(at + 1);
+      } else {
+        baseDir = parts.length > 2 ? "/" + parts[1] + "/" : "/";
+        rest = parts.slice(2);
+      }
+
+      rest = rest.filter(function (part) { return part; });
+
+      /* Path segments are already percent-encoded, so join them rather than
+         encoding again ("%20" would otherwise become "%2520"). */
+      var target = location.origin + baseDir + "index.html";
+      if (rest.length) target += "#" + rest.join("%20");
+
+      location.replace(target);
+    })();
+  </script>
+</head>
+<body>
+  <p>Opening the invitation…</p>
+</body>
+</html>

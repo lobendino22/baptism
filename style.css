@@ -1,0 +1,252 @@
+/* ── Palette (taken from the invitation card) ────────── */
+:root {
+  --blue-ink: #3f4f8f;
+  --blue: #7ba6dc;
+  --blue-mid: #a8c6e8;
+  --blue-soft: #cfe0f2;
+  --blue-wash: #eaf3fb;
+  --cream: #fdf8ec;
+  --brown: #7a5433;
+  --gold: #f2cd76;
+
+  --sans: "Quicksand", "Segoe UI", sans-serif;
+}
+
+* { box-sizing: border-box; }
+
+html { -webkit-text-size-adjust: 100%; }
+
+body {
+  margin: 0;
+  padding: clamp(18px, 4vw, 52px) clamp(12px, 4vw, 40px);
+  font-family: var(--sans);
+  color: var(--brown);
+  min-height: 100vh;
+  background-color: #dbe8f6;
+  background-image:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.55) 0%, rgba(255, 255, 255, 0) 45%),
+    repeating-conic-gradient(#c8ddf2 0% 25%, #eaf3fb 0% 50%);
+  background-size: 100% 100%, 112px 112px;
+}
+
+/* ── Watercolor clouds & stars ───────────────────────── */
+.sky {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  overflow: hidden;
+}
+
+.cloud {
+  position: absolute;
+  border-radius: 999px;
+  filter: blur(2px);
+  opacity: 0.8;
+  background:
+    radial-gradient(circle at 30% 55%, #ffffff 0 40%, rgba(255, 255, 255, 0) 62%),
+    radial-gradient(circle at 58% 40%, #ffffff 0 34%, rgba(255, 255, 255, 0) 58%),
+    radial-gradient(circle at 78% 62%, #fdf8ec 0 30%, rgba(253, 248, 236, 0) 55%);
+}
+
+.cloud--a {
+  width: 340px;
+  height: 190px;
+  top: -40px;
+  left: -70px;
+}
+
+.cloud--b {
+  width: 380px;
+  height: 210px;
+  bottom: -70px;
+  right: -90px;
+  transform: scaleX(-1);
+}
+
+.star {
+  position: absolute;
+  width: 22px;
+  height: 22px;
+  opacity: 0.7;
+  background: var(--gold);
+  clip-path: polygon(50% 0%, 61% 35%, 98% 35%, 68% 57%, 79% 91%, 50% 70%, 21% 91%, 32% 57%, 2% 35%, 39% 35%);
+}
+
+.star--a { top: 12%; left: 6%; transform: rotate(12deg) scale(0.8); }
+.star--b { top: 38%; right: 7%; transform: rotate(-14deg); }
+.star--c { bottom: 18%; left: 12%; transform: rotate(8deg) scale(0.65); }
+
+/* ── Card ────────────────────────────────────────────── */
+.invite {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  max-width: 700px;
+  margin: 0 auto;
+}
+
+.card {
+  background: var(--cream);
+  border: 3px solid #ffffff;
+  border-radius: 22px;
+  padding: clamp(20px, 4.5vw, 38px) clamp(16px, 4vw, 34px) clamp(24px, 4vw, 34px);
+  box-shadow:
+    0 0 0 1px rgba(123, 166, 220, 0.35),
+    0 30px 60px -24px rgba(63, 79, 143, 0.45);
+  text-align: center;
+  animation: rise 0.9s ease both;
+}
+
+/* ── Guest name input ────────────────────────────────── */
+.namer {
+  margin-bottom: clamp(18px, 3.5vw, 24px);
+  padding-bottom: clamp(18px, 3.5vw, 24px);
+  border-bottom: 2px dashed var(--blue-soft);
+}
+
+.namer__label {
+  display: block;
+  margin-bottom: 10px;
+  font-size: 0.6rem;
+  font-weight: 700;
+  letter-spacing: 0.24em;
+  text-transform: uppercase;
+  color: var(--blue-ink);
+}
+
+.namer__input {
+  width: 100%;
+  max-width: 320px;
+  padding: 12px 16px;
+  font-family: var(--sans);
+  font-size: 1rem;
+  font-weight: 500;
+  text-align: center;
+  color: var(--brown);
+  background: #ffffff;
+  border: 2px dashed var(--blue-mid);
+  border-radius: 14px;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.namer__input::placeholder {
+  color: #b3c6de;
+  font-weight: 500;
+}
+
+.namer__input:focus {
+  border-color: var(--blue);
+  box-shadow: 0 0 0 4px rgba(123, 166, 220, 0.22);
+  outline: none;
+}
+
+.namer__hint {
+  margin: 10px 0 0;
+  font-size: 0.58rem;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: #9db4d4;
+}
+
+/* ── Guest greeting ──────────────────────────────────── */
+.greeting {
+  padding-bottom: clamp(18px, 3.5vw, 24px);
+  margin-bottom: clamp(18px, 3.5vw, 24px);
+  border-bottom: 2px dashed var(--blue-soft);
+}
+
+.greeting__name {
+  margin: 0;
+  font-family: "Great Vibes", "Brush Script MT", cursive;
+  font-size: clamp(1.9rem, 8vw, 2.9rem);
+  line-height: 1.2;
+  color: var(--blue-ink);
+  text-shadow:
+    2px 2px 0 #ffffff,
+    3px 6px 12px rgba(63, 79, 143, 0.24);
+  overflow-wrap: anywhere;
+}
+
+.greeting__line {
+  margin: 6px 0 0;
+  font-size: 0.64rem;
+  font-weight: 700;
+  letter-spacing: 0.28em;
+  text-transform: uppercase;
+  color: var(--brown);
+}
+
+/* ── Keepsake card ───────────────────────────────────── */
+.keepsake__frame {
+  display: block;
+  border-radius: 14px;
+  overflow: hidden;
+  border: 4px solid #ffffff;
+  box-shadow: 0 18px 34px -16px rgba(63, 79, 143, 0.5);
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+
+.keepsake__frame img {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+.keepsake__frame:hover,
+.keepsake__frame:focus-visible {
+  transform: translateY(-3px);
+  box-shadow: 0 24px 40px -16px rgba(63, 79, 143, 0.55);
+  outline: none;
+}
+
+.keepsake__hint {
+  margin: 16px 0 0;
+  font-size: 0.62rem;
+  font-weight: 600;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: #9db4d4;
+}
+
+/* ── Footer ──────────────────────────────────────────── */
+.foot {
+  margin-top: clamp(22px, 4vw, 30px);
+}
+
+.foot__rule {
+  display: block;
+  width: min(220px, 70%);
+  margin: 0 auto 14px;
+  fill: none;
+  stroke: var(--blue-mid);
+  stroke-width: 1.5;
+  stroke-linecap: round;
+}
+
+.foot p {
+  margin: 0;
+  font-size: 0.64rem;
+  font-weight: 700;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--brown);
+}
+
+/* ── Motion ──────────────────────────────────────────── */
+@keyframes rise {
+  from { opacity: 0; transform: translateY(16px); }
+  to   { opacity: 1; transform: none; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .card { animation: none; }
+}
+
+[hidden] { display: none !important; }
+
+/* ── Small screens ───────────────────────────────────── */
+@media (max-width: 560px) {
+  .keepsake__frame { border-width: 3px; }
+}

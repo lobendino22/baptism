@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Zydel Kenzoi · Christening Invitation</title>
+  <meta name="description" content="Christening invitation of Zydel Kenzoi." />
+  <meta property="og:title" content="Zydel Kenzoi · Christening Invitation" />
+  <meta property="og:image" content="assets/christening-card.webp" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Quicksand:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <div class="sky" aria-hidden="true">
+    <span class="cloud cloud--a"></span>
+    <span class="cloud cloud--b"></span>
+    <span class="star star--a"></span>
+    <span class="star star--b"></span>
+    <span class="star star--c"></span>
+  </div>
+
+  <main class="invite">
+    <div class="card">
+
+      <div class="namer" id="namer" hidden>
+        <label class="namer__label" for="nameInput">Guest name</label>
+        <input class="namer__input" id="nameInput" type="text" maxlength="60"
+               placeholder="Type a name…" autocomplete="off" spellcheck="false" />
+        <p class="namer__hint">The name appears above the card and in the link</p>
+      </div>
+
+      <div class="greeting" id="greeting" hidden>
+        <p class="greeting__name" id="guest"></p>
+        <p class="greeting__line">You are invited</p>
+      </div>
+
+      <section class="keepsake">
+        <a class="keepsake__frame" href="assets/christening-card.webp" target="_blank" rel="noopener">
+          <img src="assets/christening-card.webp" width="1131" height="1600"
+               alt="Christening invitation card for Zydel Kenzoi — watercolor teddy bears, clouds and stars on a baby-blue checkered background, with the ceremony at Saint Agustine Parish Church and reception at Leal's Residence." />
+        </a>
+        <p class="keepsake__hint">Tap the card to open it full size</p>
+      </section>
+
+      <footer class="foot">
+        <svg class="foot__rule" viewBox="0 0 240 24" aria-hidden="true">
+          <path d="M16 12h82" />
+          <path d="M142 12h82" />
+          <path d="M112 6l8 6-8 6-8-6 8-6Z" />
+        </svg>
+        <p>With love, the Lobendino/Leal family</p>
+      </footer>
+
+    </div>
+  </main>
+
+  <script>
+    /* Guest name can arrive in the link:
+         index.html#Rodel%20Lobendino
+         index.html?name=Rodel%20Lobendino
+         index.html/Rodel%20Lobendino   (via 404.html on GitHub Pages)
+       With no name in the link, a "Guest name" box is shown so you can type one.
+       Typing updates the address bar, so copy that link and send it. */
+    (function () {
+      var BASE_TITLE = "Zydel Kenzoi · Christening Invitation";
+      var greeting = document.getElementById("greeting");
+      var guestEl = document.getElementById("guest");
+      var namer = document.getElementById("namer");
+      var input = document.getElementById("nameInput");
+
+      function tidy(value) {
+        return String(value == null ? "" : value).replace(/\s+/g, " ").trim().slice(0, 60);
+      }
+
+      function fromUrl(value) {
+        if (!value) return "";
+        try { value = decodeURIComponent(value); } catch (e) { /* keep as typed */ }
+        return tidy(value.replace(/[\/_+]+/g, " "));
+      }
+
+      function show(value) {
+        var text = tidy(value);
+        if (!text) {
+          greeting.hidden = true;
+          guestEl.textContent = "";
+          document.title = BASE_TITLE;
+          return;
+        }
+        guestEl.textContent = text;
+        greeting.hidden = false;
+        document.title = text + " · Zydel Kenzoi Christening";
+      }
+
+      var params = new URLSearchParams(location.search);
+      var name = fromUrl(params.get("name") || params.get("for") || params.get("guest"));
+
+      if (!name) {
+        name = fromUrl(location.hash.replace(/^#/, "").replace(/^(name|for|guest)=/i, ""));
+      }
+
+      if (!name) {
+        var parts = location.pathname.split("/").filter(Boolean);
+        var at = parts.lastIndexOf("index.html");
+        if (at > -1 && parts[at + 1]) name = fromUrl(parts.slice(at + 1).join(" "));
+      }
+
+      if (name) {
+        show(name);
+        return;
+      }
+
+      namer.hidden = false;
+      input.addEventListener("input", function () {
+        var typed = input.value;
+        show(typed);
+        try {
+          history.replaceState(
+            null,
+            "",
+            tidy(typed) ? "#" + encodeURIComponent(tidy(typed)) : location.pathname
+          );
+        } catch (e) { /* file:// may refuse; the greeting still works */ }
+      });
+    })();
+  </script>
+</body>
+</html>
